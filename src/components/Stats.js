@@ -1,182 +1,95 @@
-import React, {useRef, useState, useEffect} from 'react'
-import { withStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import axios from 'axios';
+import React from 'react'
+import { HordeData } from './data/HordeData'
 import '../styles/Stats.css'
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { CSSRulePlugin } from "gsap/CSSRulePlugin";
 
+class Stats extends React.Component {
 
-gsap.registerPlugin(ScrollTrigger);
-gsap.registerPlugin(CSSRulePlugin);
+    constructor() {
+        super()
 
-const styles = theme => ({
-    root: {
-      flexGrow: 1,
-    }
-  });
-
-function Stats(props) {
-    const { classes } = props;
-
-    let stats = useRef(null)
-    let items = useRef(null)
-    let owner = useRef(null)
-    let floorprice = useRef(null)
-    let volumetraded = useRef(null)
-    let triggerelement = useRef(null)
-
-    useEffect(()=> {
-        gsap.from(stats,{
-            scrollTrigger:{
-                trigger: triggerelement,
-                endTrigger: triggerelement,
-                toggleActions: "restart pause restart pause",
-                start: "35% 95%",
-                end: "100% 5%",
-                markers: false
-            },
-            duration: 2,
-            opacity: 0,
-            y: 100,
-            ease: "expo.out"
-        });
-        gsap.from(items,{
-            scrollTrigger:{
-                trigger: triggerelement,
-                endTrigger: triggerelement,
-                toggleActions: "restart pause restart pause",
-                start: "35% 95%",
-                end: "100% 5%",
-                markers: false
-            },
-            duration: 2,
-            opacity: 0,
-            y: 100,
-            ease: "expo.out"
-        });
-        gsap.from(owner,{
-            scrollTrigger:{
-                trigger: triggerelement,
-                endTrigger: triggerelement,
-                toggleActions: "restart pause restart pause",
-                start: "35% 95%",
-                end: "100% 5%",
-                markers: false
-            },
-            duration: 2,
-            opacity: 0,
-            y: 100,
-            ease: "expo.out"
-        });
-        gsap.from(floorprice,{
-            scrollTrigger:{
-                trigger: triggerelement,
-                endTrigger: triggerelement,
-                toggleActions: "restart pause restart pause",
-                start: "35% 95%",
-                end: "100% 5%",
-                markers: false
-            },
-            duration: 2,
-            opacity: 0,
-            y: 100,
-            ease: "expo.out"
-        });
-        gsap.from(volumetraded,{
-            scrollTrigger:{
-                trigger: triggerelement,
-                endTrigger: triggerelement,
-                toggleActions: "restart pause restart pause",
-                start: "35% 95%",
-                end: "100% 5%",
-                markers: false
-            },
-            duration: 2,
-            opacity: 0,
-            y: 100,
-            ease: "expo.out"
-        });
-    }, [])
-    
-    
-
-    const url = 'https://api.opensea.io/api/v1/collections?asset_owner=0x2a1ea3ac74703c4efbf09252d6e859296344de5e&offset=0';
-    const [collection, setCollection] = useState(null);
-
-    useEffect(()=> {
-        axios.get(url)
-        .then(response => {
-            setCollection(response.data)
-        })
-    }, [url])
-
-    let itemsData = null
-    let ownerData = null
-    let floorPriceData = 0
-    let volumeTradedData = 0
-    if(collection){
-        itemsData = collection[0].stats.count;
-        ownerData = collection[0].stats.num_owners
-        floorPriceData = Math.round((collection[0].stats.floor_price)*100)/100
-        volumeTradedData = Math.round((collection[0].stats.total_volume)*100)/100
+        this.state = {
+            currentHordeInformainId: 0
+        }
     }
 
-    return (
-        <div id="Stats" className="stats-wrapper" style={{"position": "relative"}}>
-            <div className="custom-container" style={{"paddingBlock" : "7rem"}} ref={el => {triggerelement = el}}>
-                <Grid container spacing={3} style={{ "margin-bottom": "1.5rem"}}>
-                    <Grid item xs={12} style={{"marginBottom" : "5rem"}}>
-                        <Typography align="start" variant="h3" gutterBottom ref={el => {stats = el}}>
-                            Stats
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={3}>
-                        <div ref={el => {items = el}}>
-                            <Typography align="center" gutterBottom variant="subtitle1" component="div">
-                                Items
-                            </Typography>
-                            <Typography align="center" variant="h6" gutterBottom>
-                                {itemsData}
-                            </Typography>
+    render() {
+        return (
+            <div className="w-full bg-gray-900 flex flex-col place-items-center" id="Stats">
+                <div className="w-84.5% space-y-24 pb-24">
+                    <div className="h-412px-rem grid grid-cols-3">
+                        <div className="flex flex-col justify-center space-y-8 text-center border-2 border-purple-700 rounded-3xl px-4 mx-6 feature-hype-privileges">
+                            <h1 className="text-white text-4xl font-bold italic">GET HYPE</h1>
+                            <p className="text-white text-xl">
+                                Every Creatures of ERA OF HYPE is out-of-this-world! However, some are more exotic and more important than the rest.
+                            </p>
                         </div>
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={3}>
-                        <div ref={el => {owner = el}}>
-                            <Typography align="center" gutterBottom variant="subtitle1" component="div">
-                                Owner
-                            </Typography>
-                            <Typography align="center" variant="h6" gutterBottom>
-                                {ownerData}
-                            </Typography>
+                        <div className="border-2 border-opacity-0 rounded-3xl overflow-hidden feature-blockchain p-1 mx-6">
+                            <div className="flex flex-col justify-center space-y-8 z-10 rounded-3xl text-center bg-gray-900 px-3 h-full">
+                                <h1 className="text-white text-4xl font-bold italic">BLOCKCHAIN</h1>
+                                <p className="text-white text-xl">
+                                    All creatures <strong>stored</strong> as <strong>ERC-721 tokens</strong> on the <strong>Ethereum blockchain</strong> and hosted on<br></br>IPFS.
+                                </p>
+                            </div>
                         </div>
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={3}>
-                        <div ref={el => {floorprice = el}}>
-                            <Typography align="center" gutterBottom variant="subtitle1" component="div">
-                                Floor price
-                            </Typography>
-                            <Typography align="center" variant="h6" gutterBottom>
-                                {floorPriceData} eth
-                            </Typography>
+                        <div className="flex flex-col justify-center space-y-8 text-center border-2 border-purple-700 rounded-3xl px-4 mx-6 feature-hype-privileges">
+                            <h1 className="text-white text-4xl font-bold italic">PRIVILEGES</h1>
+                            <p className="text-white text-xl">
+                            NFT have special characteristics that can bring many privileges to their owner, like passive income, or VIP tickets for exclusive events.
+                            </p>
                         </div>
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={3}>
-                        <div ref={el => {volumetraded = el}}>
-                            <Typography align="center" gutterBottom variant="subtitle1" component="div">
-                                Volume traded
-                            </Typography>
-                            <Typography align="center" variant="h6" gutterBottom>
-                                {volumeTradedData} eth
-                            </Typography>
+                    </div>
+                    <div className="flex flex-col place-items-center space-y-4">
+                        <h3 className="text-xl text-white">SNEAK INFORMATIONS</h3>
+                        <h1 className="text-6xl text-white font-extrabold italic">2 EVOLUTIONS</h1>
+                        <div className="flex space-x-8 pt-6">
+                            <button className="bg-indigo-900 rounded-lg text-white text-2xl px-6 py-4 block cursor-pointer"
+                               onClick={() => this.setState({currentHordeInformainId: 0})}
+                               >Legendary</button>
+                            <button className="bg-indigo-900 rounded-lg text-white text-2xl px-6 py-4 block cursor-pointer"
+                               onClick={() => this.setState({currentHordeInformainId: 1})}
+                               >Genetic</button>
                         </div>
-                    </Grid>
-                </Grid>
+                    </div>
+                    <div>
+                        {HordeData.map((item, i) => {
+                            return (
+                            i === this.state.currentHordeInformainId &&
+                            <div className="flex space-x-16 fadeIn" key={i}>
+                                <div className="flex flex-col justify-center space-y-6">
+                                    <h1 className="text-white text-6xl font-extrabold italic">{item.title}</h1>
+                                    <h2 className="bg-transparent text-4xl font-black pl-2"
+                                        style={{
+                                            WebkitTextFillColor: "transparent",
+                                            WebkitBackgroundClip: "text",
+                                            backgroundImage: "linear-gradient(180deg, #BEA7E1 0%, #4C3892 100%)"}
+                                        }>
+                                        {item.count}  <span className="text-2xl font-normal">units</span>
+                                    </h2>
+                                    <p className="text-white text-xl">
+                                        {item.description}
+                                    </p>
+                                    <div className="flex space-x-6 pl-3">
+                                        <a className="flex items-center bg-gray-900 border-2 border-white rounded-lg text-white text-xl px-5 py-3 block cursor-pointer" href="/">
+                                            <span className="text-white text-2xl pr-2">
+                                                <i className="fab fa-instagram"></i>
+                                            </span>Instagram
+                                        </a>
+                                        <a className="flex items-center bg-gray-900 border-2 border-white rounded-lg text-white text-xl px-5 py-3 block cursor-pointer" href="/">
+                                            <span className="text-white text-2xl pr-2">
+                                                <i className="fab fa-discord"></i>
+                                            </span>Discord
+                                        </a>
+                                    </div>
+                                </div>
+                                <img className="w-459px-rem rounded-3xl shadow" src={item.image} alt="card"></img>
+                            </div>
+                            )
+                        })}
+                    </div>
+                </div>
             </div>
-        </div>
-    )
+        )
+    }
 }
 
-export default withStyles(styles)(Stats)
+export default Stats;
