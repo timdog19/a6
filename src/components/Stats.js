@@ -1,5 +1,5 @@
 import React from 'react'
-import { HordeData } from './data/HordeData'
+import { HordeData } from '../data/HordeData'
 import '../styles/Stats.css'
 
 class Stats extends React.Component {
