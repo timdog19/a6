@@ -1,7 +1,7 @@
-import GeneticImage from '../../../assets/card2.jpeg'
-import LegendaryImage from '../../../assets/card4.png'
-import ZermioneImage from '../../../assets/card1.jpeg'
-import UnknownImage from '../../../assets/unknown.png'
+import GeneticImage from '../images/bg.png'
+import LegendaryImage from '../images/bg.png'
+import ZermioneImage from '../images/bg.png'
+import UnknownImage from '../images/bg.png'
 
 export const SneakPunksData = [
     {
